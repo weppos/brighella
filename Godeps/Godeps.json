@@ -1,0 +1,13 @@
+{
+	"ImportPath": "github.com/weppos/brighella",
+	"GoVersion": "go1.6",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/miekg/dns",
+			"Rev": "2c1a31d550949c6df1b7cc6a758d18584b0b071e"
+		}
+	]
+}
