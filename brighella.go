@@ -1,13 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
+	"net"
 	"net/http"
 	"os"
+
+	"github.com/miekg/dns"
 )
 
 const what = "brighella"
+const dnsPrefix = "_frame"
+const resolverAddress = "8.8.8.8"
+const resolverPort = "53"
 
 var (
 	httpPort string
@@ -64,10 +71,50 @@ func (s *Server) TemporaryRedirect(w http.ResponseWriter, r *http.Request, strUR
 }
 
 func (s *Server) MaskedRedirect(w http.ResponseWriter, r *http.Request, strURL string) {
-	w.Header().Set("Content-type", "text/html")
+	targetURL, err := queryRedirectTarget(r.Host)
 
+	// An error happened. For now, do not display the full error.
+	if err != nil {
+		http.Error(w, "Unable to find redirect target", http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-type", "text/html")
 	t, _ := template.ParseFiles("redirect.tmpl")
-	t.Execute(w, &frame{Src: strURL})
+	t.Execute(w, &frame{Src: targetURL})
+}
+
+func queryRedirectTarget(host string) (string, error) {
+	targetFqdn := fmt.Sprintf("%s.%s", dnsPrefix, host)
+
+	c := new(dns.Client)
+	m := new(dns.Msg)
+	m.SetQuestion(dns.Fqdn(targetFqdn), dns.TypeTXT)
+	r, _, err := c.Exchange(m, net.JoinHostPort(resolverAddress, resolverPort))
+
+	if err != nil {
+		log.Printf("[%s] Error querying %s: %v", host, targetFqdn, err)
+		return "", err
+	}
+
+	if r.Rcode != dns.RcodeSuccess {
+		err = fmt.Errorf("answer from %s not successful: %v", targetFqdn, dns.RcodeToString[r.Rcode])
+		log.Printf("[%s] Error %s", host, err)
+		return "", err
+	}
+
+	for _, a := range r.Answer {
+		switch rr := a.(type) {
+		case *dns.TXT:
+			log.Printf("[%s] Found redirect target at %s: %v", host, targetFqdn, rr.Txt[0])
+			return rr.Txt[0], nil
+		}
+	}
+
+	err = fmt.Errorf("redirect target not found at %s", targetFqdn)
+	log.Printf("[%s] Error %s", host, err)
+
+	return "", err
 }
 
 type frame struct {
