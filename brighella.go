@@ -58,11 +58,19 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // Root is the handler for the HTTP requests to /.
+// Any request that is not for the root path / is automatically redirected
+// to the root with a 302 status code. Only a request to / will enable the iframe.
 func (s *Server) Root(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		s.TemporaryRedirect(w, r, "/")
 	} else {
-		s.MaskedRedirect(w, r, "http://example.com/page.html")
+		targetURL, err := queryRedirectTarget(r.Host)
+		// An error happened. For now, do not display the full error.
+		if err != nil {
+			http.Error(w, "Unable to find redirect target", http.StatusBadRequest)
+			return
+		}
+		s.MaskedRedirect(w, r, targetURL)
 	}
 }
 
@@ -71,17 +79,9 @@ func (s *Server) TemporaryRedirect(w http.ResponseWriter, r *http.Request, strUR
 }
 
 func (s *Server) MaskedRedirect(w http.ResponseWriter, r *http.Request, strURL string) {
-	targetURL, err := queryRedirectTarget(r.Host)
-
-	// An error happened. For now, do not display the full error.
-	if err != nil {
-		http.Error(w, "Unable to find redirect target", http.StatusBadRequest)
-		return
-	}
-
 	w.Header().Set("Content-type", "text/html")
 	t, _ := template.ParseFiles("redirect.tmpl")
-	t.Execute(w, &frame{Src: targetURL})
+	t.Execute(w, &frame{Src: strURL})
 }
 
 func queryRedirectTarget(host string) (string, error) {
