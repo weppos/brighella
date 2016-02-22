@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -52,12 +52,24 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // Root is the handler for the HTTP requests to /.
 func (s *Server) Root(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		s.TemporaryRedirect(w, r, "/")
+	} else {
+		s.MaskedRedirect(w, r, "http://example.com/page.html")
+	}
+}
+
+func (s *Server) TemporaryRedirect(w http.ResponseWriter, r *http.Request, strURL string) {
+	http.Redirect(w, r, strURL, http.StatusTemporaryRedirect)
+}
+
+func (s *Server) MaskedRedirect(w http.ResponseWriter, r *http.Request, strURL string) {
 	w.Header().Set("Content-type", "text/html")
-	fmt.Fprintln(w, `
-<frameset rows="100%">
-  <frameset cols="100%">
-    <frame src="http://example.com/page.html" frameborder="0" scrolling="no">
-  </frameset>
-</frameset>
-	`)
+
+	t, _ := template.ParseFiles("redirect.tmpl")
+	t.Execute(w, &frame{Src: strURL})
+}
+
+type frame struct {
+	Src string
 }
