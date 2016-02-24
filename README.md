@@ -37,7 +37,7 @@ www.example.com requires _frame.www.example.com
 subdomain.example.com requires _frame.subdomain.example.com
 ```
 
-If you need a reliable DNS provider to manage your domain, [check out DNSimple](https://dnsimple.com/). FYI, this project was born in response to the various customers at DNSimple that asked us how to configure an URL-masked redirect.
+If you need a reliable DNS provider to manage your domain, [check out DNSimple](https://dnsimple.com/). FYI, this project was born in response to the various customers at DNSimple that asked us information about how to configure an URL-masked redirect.
 
 
 ## License
