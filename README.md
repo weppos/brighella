@@ -20,7 +20,9 @@ Please note that the target site may explicitly forbid the displaying of the con
 
 Let's assume you want to redirect `example.com` to `http://somesite.com`. What you have to do is:
 
-- Deploy the application and make sure the DNS record for `example.com` points to the server where the app is deployed
+- Deploy the application
+- Make sure the app is properly configured to respond to the `example.com` domain (for Heroku use the `domains:add example.com` command)
+- Make sure the DNS record for `example.com` points to the server where the app is deployed
 - Configure a DNS TXT record called `_frame.example.com` with the content `http://somesite.com`
 
 That's it. The app will automatically try to load the target of the redirect from the DNS record.
@@ -34,6 +36,8 @@ example.com requires _frame.example.com
 www.example.com requires _frame.www.example.com
 subdomain.example.com requires _frame.subdomain.example.com
 ```
+
+If you need a reliable DNS provider to manage your domain, [check out DNSimple](https://dnsimple.com/). FYI, this project was born in response to the various customers at DNSimple that asked us how to configure an URL-masked redirect.
 
 
 ## License
