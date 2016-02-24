@@ -35,3 +35,7 @@ www.example.com requires _frame.www.example.com
 subdomain.example.com requires _frame.subdomain.example.com
 ```
 
+
+## License
+
+Copyright (c) 2016 Simone Carletti. This is Free Software distributed under the MIT license.
