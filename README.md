@@ -1,6 +1,6 @@
 # Brighella
 
-Brighella is a simple URL-masking redirect service built on Go.
+_Brighella_ is a simple URL-masking redirect service built on Go.
 
 It is designed to be deployed on a PaaS service such as Heroku, and it requires zero configuration. The redirect target is fetched from a specific DNS record attached to the requested host.
 
