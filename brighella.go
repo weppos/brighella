@@ -11,10 +11,12 @@ import (
 	"github.com/miekg/dns"
 )
 
-const what = "brighella"
-const dnsPrefix = "_frame"
-const resolverAddress = "8.8.8.8"
-const resolverPort = "53"
+const (
+	what            = "brighella"
+	dnsPrefix       = "_frame"
+	resolverAddress = "8.8.8.8"
+	resolverPort    = "53"
+)
 
 var (
 	httpPort string

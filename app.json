@@ -4,9 +4,5 @@
   "repository": "https://github.com/weppos/brighella",
   "keywords": ["http", "redirect"],
   "env": {
-    "GO15VENDOREXPERIMENT": {
-      "description": "Configure the /vendor folder support for Go 1.5/1.6.",
-      "value": "1"
-    }
   }
 }

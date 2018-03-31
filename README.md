@@ -42,4 +42,4 @@ If you need a reliable DNS provider to manage your domain, [check out DNSimple](
 
 ## License
 
-Copyright (c) 2016 Simone Carletti. This is Free Software distributed under the MIT license.
+Copyright (c) 2016-2018 Simone Carletti. This is Free Software distributed under the MIT license.
