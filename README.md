@@ -8,6 +8,7 @@ It is designed to be deployed on a PaaS service such as Heroku, and it requires 
 
 [Brighella](https://en.wikipedia.org/wiki/Brighella) is a comic, masked character from the Commedia dell'arte. It's also an Italian carnival mask.
 
+
 ## How it works
 
 The redirect is performed using an iframe. The target URL is rendered in an iframe, so that the URL will continue to match your URL in the browser, but the user will effectively navigate in the target URL.
@@ -15,6 +16,7 @@ The redirect is performed using an iframe. The target URL is rendered in an ifra
 This is known as _iframe masking_, _masked redirect_, _masked forwarding_ or _iframe redirect_.
 
 Please note that the target site may explicitly forbid the displaying of the content within an iframe (using the [`X-Frame-Options` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options)). In that case, there is nothing you can do because that's what the owner of the target URL wants.
+
 
 ## Usage
 
@@ -42,4 +44,4 @@ If you need a reliable DNS provider to manage your domain, [check out DNSimple](
 
 ## License
 
-Copyright (c) 2016-2018 Simone Carletti. This is Free Software distributed under the MIT license.
+Copyright (c) 2016-2019 Simone Carletti. This is Free Software distributed under the MIT license.
