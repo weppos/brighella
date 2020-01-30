@@ -2,6 +2,8 @@
 
 _Brighella_ is a simple URL-masking redirect service built on Go.
 
+[![Build Status](https://travis-ci.com/weppos/brighella.svg?branch=master)](https://travis-ci.com/weppos/brighella)
+
 It is designed to be deployed on a PaaS service such as Heroku, and it requires zero configuration. The redirect target is fetched from a specific DNS record attached to the requested host.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/weppos/brighella)
