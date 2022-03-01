@@ -4,4 +4,4 @@ module github.com/weppos/brighella
 
 go 1.12
 
-require github.com/miekg/dns v1.1.45
+require github.com/miekg/dns v1.1.46
