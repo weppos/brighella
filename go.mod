@@ -4,7 +4,7 @@ module github.com/weppos/brighella
 
 go 1.18
 
-require github.com/miekg/dns v1.1.51
+require github.com/miekg/dns v1.1.52
 
 require (
 	golang.org/x/mod v0.7.0 // indirect
